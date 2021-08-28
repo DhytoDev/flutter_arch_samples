@@ -5,18 +5,15 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:bloc_library/blocs/todos/todos.dart';
 import 'package:bloc_library/models/models.dart';
+import 'package:meta/meta.dart';
 import 'package:todos_repository_core/todos_repository_core.dart';
 
 class TodosBloc extends Bloc<TodosEvent, TodosState> {
   final TodosRepository todosRepository;
 
-  TodosBloc({@required this.todosRepository});
-
-  @override
-  TodosState get initialState => TodosLoading();
+  TodosBloc({@required this.todosRepository}) : super(TodosLoading());
 
   @override
   Stream<TodosState> mapEventToState(TodosEvent event) async* {

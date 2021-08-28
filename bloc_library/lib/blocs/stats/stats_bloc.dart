@@ -1,22 +1,23 @@
 import 'dart:async';
-import 'package:meta/meta.dart';
+
 import 'package:bloc/bloc.dart';
 import 'package:bloc_library/blocs/blocs.dart';
+import 'package:meta/meta.dart';
 
 class StatsBloc extends Bloc<StatsEvent, StatsState> {
   final TodosBloc todosBloc;
   StreamSubscription todosSubscription;
 
-  StatsBloc({@required this.todosBloc}) {
-    todosSubscription = todosBloc.listen((state) {
+  StatsBloc({@required this.todosBloc}) : super(StatsLoading()) {
+    todosSubscription = todosBloc.stream.listen((state) {
       if (state is TodosLoaded) {
         add(UpdateStats(state.todos));
       }
     });
   }
 
-  @override
-  StatsState get initialState => StatsLoading();
+  // @override
+  // StatsState get initialState => StatsLoading();
 
   @override
   Stream<StatsState> mapEventToState(StatsEvent event) async* {

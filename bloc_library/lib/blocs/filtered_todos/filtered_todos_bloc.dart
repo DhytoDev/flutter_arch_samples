@@ -3,32 +3,24 @@
 // in the LICENSE file.
 
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:bloc_library/blocs/filtered_todos/filtered_todos.dart';
 import 'package:bloc_library/blocs/todos/todos.dart';
 import 'package:bloc_library/models/models.dart';
+import 'package:meta/meta.dart';
 
 class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilteredTodosState> {
   final TodosBloc todosBloc;
   StreamSubscription todosSubscription;
 
-  FilteredTodosBloc({@required this.todosBloc}) {
-    todosSubscription = todosBloc.listen((state) {
+  FilteredTodosBloc({@required this.todosBloc})
+      : super(FilteredTodosLoading()) {
+    todosSubscription = todosBloc.stream.listen((state) {
       if (state is TodosLoaded) {
-        add(UpdateTodos(state.todos));
+        add(UpdateFilter(VisibilityFilter.all));
       }
     });
-  }
-
-  @override
-  FilteredTodosState get initialState {
-    return todosBloc.state is TodosLoaded
-        ? FilteredTodosLoaded(
-            (todosBloc.state as TodosLoaded).todos,
-            VisibilityFilter.all,
-          )
-        : FilteredTodosLoading();
   }
 
   @override

@@ -9,8 +9,10 @@ import 'package:bloc_library/blocs/tab/tab.dart';
 import 'package:bloc_library/models/models.dart';
 
 class TabBloc extends Bloc<TabEvent, AppTab> {
-  @override
-  AppTab get initialState => AppTab.todos;
+  TabBloc({AppTab initialState = AppTab.todos}) : super(initialState);
+
+  // @override
+  // AppTab get initialState => AppTab.todos;
 
   @override
   Stream<AppTab> mapEventToState(TabEvent event) async* {

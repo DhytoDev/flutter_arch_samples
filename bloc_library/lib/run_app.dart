@@ -2,7 +2,6 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'package:bloc/bloc.dart';
 import 'package:bloc_library/blocs/blocs.dart';
 import 'package:bloc_library/localization.dart';
 import 'package:bloc_library/models/models.dart';
@@ -16,7 +15,7 @@ void runBlocLibraryApp(TodosRepository repository) {
   // BlocSupervisor oversees Blocs and delegates to BlocDelegate.
   // We can set the BlocSupervisor's delegate to an instance of `SimpleBlocDelegate`.
   // This will allow us to handle all transitions and errors in SimpleBlocDelegate.
-  BlocSupervisor.delegate = SimpleBlocDelegate();
+  SimpleBlocDelegate();
   runApp(
     BlocProvider<TodosBloc>(
       create: (context) {
