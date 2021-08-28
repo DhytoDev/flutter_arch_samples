@@ -2,16 +2,16 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
+import 'package:bloc_library/bloc_library_keys.dart';
+import 'package:bloc_library/blocs/blocs.dart';
 import 'package:bloc_library/models/models.dart';
-import 'package:flutter/material.dart';
+import 'package:bloc_library/screens/screens.dart';
+import 'package:bloc_library/widgets/widgets.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todos_app_core/todos_app_core.dart';
-import 'package:bloc_library/blocs/blocs.dart';
-import 'package:bloc_library/widgets/widgets.dart';
-import 'package:bloc_library/screens/screens.dart';
-import 'package:bloc_library/bloc_library_keys.dart';
 
 class FilteredTodos extends StatelessWidget {
   FilteredTodos({Key key}) : super(key: key);
@@ -20,6 +20,12 @@ class FilteredTodos extends StatelessWidget {
   Widget build(BuildContext context) {
     final todosBloc = BlocProvider.of<TodosBloc>(context);
     final localizations = ArchSampleLocalizations.of(context);
+
+    if (todosBloc.state is TodosLoaded) {
+      context
+          .read<FilteredTodosBloc>()
+          .add(UpdateTodos((todosBloc.state as TodosLoaded).todos));
+    }
 
     return BlocBuilder<FilteredTodosBloc, FilteredTodosState>(
       builder: (

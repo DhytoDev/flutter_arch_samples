@@ -15,7 +15,7 @@ void runBlocLibraryApp(TodosRepository repository) {
   // BlocSupervisor oversees Blocs and delegates to BlocDelegate.
   // We can set the BlocSupervisor's delegate to an instance of `SimpleBlocDelegate`.
   // This will allow us to handle all transitions and errors in SimpleBlocDelegate.
-  SimpleBlocDelegate();
+  Bloc.observer = SimpleBlocDelegate();
   runApp(
     BlocProvider<TodosBloc>(
       create: (context) {
@@ -29,7 +29,7 @@ void runBlocLibraryApp(TodosRepository repository) {
 class TodosApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final todosBloc = BlocProvider.of<TodosBloc>(context);
+    final todosBloc = context.read<TodosBloc>();
 
     return MaterialApp(
       onGenerateTitle: (context) =>

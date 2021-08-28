@@ -12,16 +12,8 @@ import 'package:meta/meta.dart';
 
 class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilteredTodosState> {
   final TodosBloc todosBloc;
-  StreamSubscription todosSubscription;
 
-  FilteredTodosBloc({@required this.todosBloc})
-      : super(FilteredTodosLoading()) {
-    todosSubscription = todosBloc.stream.listen((state) {
-      if (state is TodosLoaded) {
-        add(UpdateFilter(VisibilityFilter.all));
-      }
-    });
-  }
+  FilteredTodosBloc({@required this.todosBloc}) : super(FilteredTodosLoading());
 
   @override
   Stream<FilteredTodosState> mapEventToState(FilteredTodosEvent event) async* {
@@ -78,7 +70,6 @@ class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilteredTodosState> {
 
   @override
   Future<void> close() {
-    todosSubscription?.cancel();
     return super.close();
   }
 }
